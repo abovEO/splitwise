@@ -1,0 +1,96 @@
+package entities;
+
+import strategy.SplitStrategy;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public class Expense {
+    private final String id;
+    private final String desc;
+    private final double amount;
+    private final List<Split> splits;
+    private final User paidBy;
+    private final LocalDateTime timestamp;
+
+    private Expense(ExpenseBuilder builder) {
+        this.id = builder.id;
+        this.desc = builder.description;
+        this.amount = builder.amount;
+        this.paidBy = builder.paidBy;
+        this.timestamp = LocalDateTime.now();
+        this.splits = builder.splitStrategy.calculateSplits(builder.amount, builder.participants, builder.paidBy, builder.splitValues);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public List<Split> getSplits() {
+        return splits;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public User getPaidBy() {
+        return paidBy;
+    }
+
+    public class ExpenseBuilder {
+        private String id;
+        private String description;
+        private double amount;
+        private User paidBy;
+        private SplitStrategy splitStrategy;
+        private List<Double> splitValues;
+        private List<User> participants;
+
+        public ExpenseBuilder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public ExpenseBuilder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ExpenseBuilder setAmount(double amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public ExpenseBuilder setPaidBy(User paidBy) {
+            this.paidBy = paidBy;
+            return this;
+        }
+
+        public ExpenseBuilder setParticipants(List<User> participants) {
+            this.participants = participants;
+            return this;
+        }
+
+        public ExpenseBuilder setSplitStrategy(SplitStrategy splitStrategy) {
+            this.splitStrategy = splitStrategy;
+            return this;
+        }
+
+        public ExpenseBuilder setSplitValues(List<Double> splitValues) {
+            this.splitValues = splitValues;
+            return this;
+        }
+
+        public Expense build() {
+            if (splitStrategy == null) throw new IllegalStateException("No split Strategy");
+            return new Expense(this);
+        }
+
+    }
+
+}

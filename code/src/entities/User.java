@@ -6,7 +6,7 @@ public class User {
     private final String id;
     private String name;
     private String email;
-    private Transactions transactions;
+    private BalanceSheet balanceSheet;
 
     public User(String name, String email) {
         this.id = UUID.randomUUID().toString();
@@ -31,7 +31,7 @@ public class User {
         return name;
     }
 
-    public Transactions getTransactions() {
-        return transactions;
+    public BalanceSheet getTransactions() {
+        return balanceSheet;
     }
 }
