@@ -42,7 +42,7 @@ public class Expense {
         return paidBy;
     }
 
-    public class ExpenseBuilder {
+    public static class ExpenseBuilder {
         private String id;
         private String description;
         private double amount;

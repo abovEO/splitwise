@@ -1,26 +1,32 @@
 package entities;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Group {
-    public final String id;
-    public final String name;
-    public List<User> participants;
+    private final String id;
+    private final String name;
+    private final List<User> participants;
 
-    public Group(String id, String name){
-        this.id = id;
+    public Group( String name, List<User> members){
+        this.id = UUID.randomUUID().toString();
         this.name = name;
+        this.participants = members;
     }
 
     public String getId() {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<User> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(User user) {
+    public void addMember(User user) {
         this.participants.add(user);
     }
 }

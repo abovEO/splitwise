@@ -12,6 +12,7 @@ public class User {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
+        this.balanceSheet = new BalanceSheet(this);
     }
 
     public void manageUserAccount(String name, String email) {
